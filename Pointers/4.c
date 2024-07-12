@@ -25,4 +25,6 @@ int main() {
     scanf("%s", b);
     strcat(a, b);
     printf("%s", a);
+    free(a);
+    free(b);
 }
