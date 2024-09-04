@@ -100,10 +100,22 @@ void snake_move(Dot* snakeHead, queue* snakeTail, Dot direction, int* eattenAppl
     snakeHead->y += direction.y;
     Dot pushing = {snakeHead->y-direction.y, snakeHead->x-direction.x};
 
-    if(snakeHead->x <= indent || snakeHead->x >= width-indent || snakeHead->y <= indent || snakeHead->y >= height-indent) {
-        clear();
-        *menu = 1;
-        return;
+    // if(snakeHead->x <= indent || snakeHead->x >= width-indent || snakeHead->y <= indent || snakeHead->y >= height-indent) {
+    //     clear();
+    //     *menu = 1;
+    //     return;
+    // }
+    if(snakeHead->x <= indent) {
+        snakeHead->x = width-indent-1;
+    }
+    else if(snakeHead->x >= width-indent) {
+        snakeHead->x = indent+1;
+    }
+    if(snakeHead->y <= indent) {
+        snakeHead->y = height-indent-1;
+    }
+    else if(snakeHead->y >= height-indent) {
+        snakeHead->y = indent+1;
     }
 
 

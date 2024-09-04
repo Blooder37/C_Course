@@ -40,7 +40,7 @@ int main() {
     int width = COLS;
     int height = LINES; 
     int choice = 0;
-    
+    int mouth = 0;
     while(!gameOver) {
         int eattenApples = 0;
         Dot apple = {rand() % (height-2*indent-3) + indent+1, rand() % (width-2*indent-3) + indent+1}; //спавн разобрать
@@ -82,7 +82,7 @@ int main() {
         }
 
         while(!menu) {
-            usleep(200000 - eattenApples*10000);
+            usleep(100000 - eattenApples*10000);
             check_key(&direction, menu);
             clear();
             snake_move(&snakeHead, &snakeTail, direction, &eattenApples, &menu, &apple, width, height, indent);
