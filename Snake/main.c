@@ -29,6 +29,7 @@ int main() {
     start_color();
 	init_pair(1, COLOR_RED, COLOR_BLACK);
     init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(3, COLOR_BLUE, COLOR_BLACK);
 
     MEVENT event;
     WINDOW *menu_win;
@@ -41,6 +42,8 @@ int main() {
     int height = LINES; 
     int choice = 0;
     int mouth = 0;
+    int solid = 0;
+
     while(!gameOver) {
         int eattenApples = 0;
         Dot apple = {rand() % (height-2*indent-3) + indent+1, rand() % (width-2*indent-3) + indent+1}; //спавн разобрать
@@ -51,17 +54,14 @@ int main() {
 
         draw_menu(height, width, choice);  
 
-        int ch;
-        mvprintw(1, 1, "Press Z to chose");
-        mvprintw(height-indent+3, 1, "Input:");
-        ch = getch();
+        int ch = getch();
         switch(ch) {
             case KEY_DOWN:
-                choice = (choice + 1) % 3;
+                choice = (choice + 1) % 4;
                 break;
             case KEY_UP:
                 if(choice == 0) {
-                    choice = 2;
+                    choice = 3;
                 }
                 else {
                     choice = choice - 1;
@@ -73,20 +73,23 @@ int main() {
                         menu = 0;
                         break;
                     case 1:
-                        //Лидерборды
+                        settings(&indent, height, width, &solid);
                         break;
                     case 2:
+                        //Лидерборды
+                        break;
+                    case 3:
                         gameOver = 1;
                         break;
                 }
         }
-
+        
         while(!menu) {
-            usleep(100000 - eattenApples*10000);
-            check_key(&direction, menu);
+            usleep(200000 - eattenApples*2000);
+            check_key(&direction, &menu);
             clear();
-            snake_move(&snakeHead, &snakeTail, direction, &eattenApples, &menu, &apple, width, height, indent);
-            draw(width, height, snakeTail, snakeHead, apple, eattenApples, indent);
+            snake_move(&snakeHead, &snakeTail, direction, &eattenApples, &menu, &apple, width, height, indent, &mouth, solid);
+            draw(width, height, snakeTail, snakeHead, apple, eattenApples, indent, &mouth);
             if(menu) {
                 clear();
             }
