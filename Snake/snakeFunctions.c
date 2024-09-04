@@ -216,13 +216,13 @@ void draw_menu(int height, int width, int choice) {
         attron(A_REVERSE);
     }
     Dot c1 = {13, width/2-8};
-    Dot c2 = {13, width/2+8};
+    Dot c2 = {13, width/2+7};
     Dot c3 = {15, width/2-8};
-    Dot c4 = {15, width/2+8};
+    Dot c4 = {15, width/2+7};
     draw_line(c1, c2);
     draw_line(c3, c4);
     mvaddch(14, width/2-8, '|');
-    mvaddch(14, width/2+8, '|');
+    mvaddch(14, width/2+7, '|');
     attroff(A_REVERSE);
     mvprintw(14, width/2-6, "Leaderboards");
 
@@ -241,7 +241,7 @@ void draw_menu(int height, int width, int choice) {
     mvprintw(18, width/2-3, "Quit");
 
 
-    mvprintw(1, 1, "Press Z to chose");
+    mvprintw(0, 1, "Press Z to chose");
     mvprintw(height-1, 1, "Input:");
 
     refresh();

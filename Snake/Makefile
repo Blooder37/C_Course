@@ -1,23 +1,32 @@
-#https://habr.com/ru/articles/155201/
-
-# Это комментарий, который говорит, что переменная CC указывает компилятор, используемый для сборки
+# Compiler
 CC = gcc
-#Это еще один комментарий. Он поясняет, что в переменной CFLAGS лежат флаги, которые передаются компилятору
-CFLAGS = -c
 
-all: main
+# Compiler flags
+CFLAGS = -Wall -Wextra -g
 
-main: main.o snakeFunctions.o queue.o
-	$(CC) main.o factorial.o hello.o -o hello
+# Linker flags for ncurses
+LDFLAGS = -lncurses -DNCURSES_STATIC
 
-main.o: main.c
-	$(CC) $(CFLAGS) -c main.c
+# Source files
+SRCS = main.c queue.c snakeFunctions.c
 
-snakeFunctions.o: snakeFunctions.c
-	$(CC) $(CFLAGS) -c snakeFunctions.c
+# Object files
+OBJS = $(SRCS:.c=.o)
 
-queue.o: queue.c
-	$(CC) $(CFLAGS) -c queue.c
+# Executable name
+EXEC = snake_game
 
+# Default target
+all: $(EXEC)
+
+# Link object files to create the executable
+$(EXEC): $(OBJS)
+	$(CC) $(OBJS) -o $(EXEC) $(LDFLAGS)
+
+# Compile source files into object files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@ 
+
+# Clean up
 clean:
-	rm -rf *.o main
+	del $(OBJS) $(EXEC)
